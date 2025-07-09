@@ -1,2 +1,3 @@
-# lgs
-LGS
+# LGS
+
+Microservice for content moderation
