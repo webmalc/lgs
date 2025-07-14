@@ -17,6 +17,7 @@ class Settings(BaseSettings):
     )
 
     api_key: str = ""
+    database_url: str = ""
 
 
 @cache
