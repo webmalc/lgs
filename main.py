@@ -1,13 +1,6 @@
 from fastapi import FastAPI
 
-from app.core.config import get_config
-from app.core.logging import get_logger
+from app.api.routes.router import get_main_router
 
 app = FastAPI()
-
-
-@app.get("/")
-def read_root() -> dict:
-    get_logger().info("test info")
-
-    return {"Hello": get_config().database_url}
+app.include_router(get_main_router(), prefix="/api")
