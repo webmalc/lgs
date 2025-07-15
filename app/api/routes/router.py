@@ -3,7 +3,6 @@ from fastapi import APIRouter
 from app.api.routes.content import get_content_router
 
 
-# TODO: test it
 def get_main_router() -> APIRouter:
     """Return the main router."""
     router = APIRouter()
