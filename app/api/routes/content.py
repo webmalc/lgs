@@ -13,7 +13,7 @@ def get_content_router() -> APIRouter:
 
 
 @_router.post("/", response_model=dto.ContentRequestPublic)
-def read_content(
+def create_content_request(
     *,
     session: SessionDep,
     content_in: dto.ContentRequestCreate,
