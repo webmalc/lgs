@@ -1,0 +1,28 @@
+services:
+  web:
+    build: .
+    container_name: fastapi-app
+    ports:
+      - "8000:8000"
+    command: uv run fastapi dev main.py --host 0.0.0.0
+    volumes:
+      - .:/app
+    environment:
+      LGS_DATABASE_URL: postgresql+psycopg://postgres:postgres@db:5433/lgs
+    depends_on:
+      - db
+
+  db:
+    image: postgres:17.5
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: lgs
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
