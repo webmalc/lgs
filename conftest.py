@@ -5,6 +5,7 @@ from collections.abc import Generator
 from pathlib import Path
 
 import pytest
+import sentry_sdk
 from alembic import command
 from alembic.config import Config
 from fastapi.testclient import TestClient
@@ -18,6 +19,8 @@ from main import app
 
 @pytest.fixture(scope="session", autouse=True)
 def set_env() -> None:
+    sentry_sdk.init()  # disable sentry
+    get_config.cache_clear()
     os.environ["LGS_TESTS"] = "1"
 
 

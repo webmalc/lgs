@@ -16,13 +16,15 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
+    is_prod: bool = False
     api_key: str = ""
     database_url: str = ""
+    sentry_dsn: str = ""
 
 
 @cache
 def get_config() -> Settings:
     """Returns settings."""
     if getenv("LGS_TESTS"):
-        return Settings(_env_file="app/tests/test.env")
+        return Settings(_env_file="app/tests/test.env")  # type: ignore
     return Settings()
