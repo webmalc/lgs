@@ -3,6 +3,7 @@ from fastapi import APIRouter
 from app.api.deps import SessionDep
 from app.dto import content as dto
 from app.repo.content import ContentRepository
+from app.services.moderation import Moderator
 
 _router = APIRouter(prefix="/content", tags=["content"])
 
@@ -19,4 +20,5 @@ def create_content_request(
     content_in: dto.ContentRequestCreate,
 ) -> dto.ContentRequestPublic:
     db_obj = ContentRepository(session).create(content_in)
+    db_obj.score = Moderator().get_score(db_obj.content).median
     return dto.ContentRequestPublic.model_validate(db_obj)
