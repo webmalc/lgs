@@ -5,6 +5,8 @@ from os import getenv
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from app.services.words_loader import load_profane_words
+
 
 class Settings(BaseSettings):
     """The base settings class."""
@@ -20,11 +22,24 @@ class Settings(BaseSettings):
     api_key: str = ""
     database_url: str = ""
     sentry_dsn: str = ""
+    profane_words_ru: list[str] | None = None
+    profane_words_en: list[str] | None = None
+
+
+def _load_profane_words_to_conf(conf: Settings) -> None:
+    """Load profane words to the config."""
+    for lang in ["en", "ru"]:
+        if not getattr(conf, f"profane_words_{lang}"):
+            setattr(conf, f"profane_words_{lang}", load_profane_words(lang))
 
 
 @cache
 def get_config() -> Settings:
     """Returns settings."""
     if getenv("LGS_TESTS"):
-        return Settings(_env_file="app/tests/test.env")  # type: ignore
-    return Settings()
+        conf = Settings(_env_file="app/tests/test.env")  # type: ignore
+    else:
+        conf = Settings()
+    _load_profane_words_to_conf(conf)
+
+    return conf
