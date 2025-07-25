@@ -7,7 +7,6 @@ from .ai import AIModerator
 from .stop_words import StopWordModerator
 
 
-# TODO: test it
 class Moderator:
     """The main moderator."""
 
@@ -22,6 +21,6 @@ class Moderator:
         """Return the content moderation score 0-100. 0 - legal, 100-illegal."""
         return ContentScore(
             **{
-                self._code_mapper[m.code]: m.get_score(content) for m in self.moderators
-            },
-        )
+                self._code_mapper[m.code]: m.get_score(content)
+                for m in self.moderators
+            })

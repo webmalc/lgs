@@ -3,8 +3,6 @@
 from .abstract import AbstractModerator
 
 
-# TODO: test it
-# TODO: implement
 class AIModerator(AbstractModerator):
     """Moderator to check content with AI."""
 
@@ -12,5 +10,5 @@ class AIModerator(AbstractModerator):
     def code(self) -> str:
         return "ai"
 
-    def get_score(self, content: str) -> int:
-        return 43
+    def get_score(self, _: str) -> int:
+        return 0

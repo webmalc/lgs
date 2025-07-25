@@ -209,3 +209,5 @@ __marimo__/
 # Projects
 *.http
 *.org
+.vscode
+prod.env

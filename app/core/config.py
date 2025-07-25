@@ -22,8 +22,8 @@ class Settings(BaseSettings):
     api_key: str = ""
     database_url: str = ""
     sentry_dsn: str = ""
-    profane_words_ru: list[str] | None = None
-    profane_words_en: list[str] | None = None
+    profane_words_ru: list[str] = []
+    profane_words_en: list[str] = []
 
 
 def _load_profane_words_to_conf(conf: Settings) -> None:
@@ -39,7 +39,7 @@ def get_config() -> Settings:
     if getenv("LGS_TESTS"):
         conf = Settings(_env_file="app/tests/test.env")  # type: ignore
     else:
-        conf = Settings()
+        conf = Settings(_env_file="prod.env")  # type: ignore
     _load_profane_words_to_conf(conf)
 
     return conf
