@@ -37,7 +37,7 @@ def _load_profane_words_to_conf(conf: Settings) -> None:
 def get_config() -> Settings:
     """Returns settings."""
     if getenv("LGS_TESTS"):
-        conf = Settings(_env_file="app/tests/test.env")  # type: ignore
+        conf = Settings(_env_file="tests/test.env")  # type: ignore
     else:
         conf = Settings(_env_file="prod.env")  # type: ignore
     _load_profane_words_to_conf(conf)
